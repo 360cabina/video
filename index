@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>QR Cabina 360</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: url('./fondo.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* oscurecer */
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+}
+
+/* contenedor */
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+/* titulo */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 60px;
+  color: #ff00cc;
+  text-shadow: 0 0 10px #ff00cc, 0 0 30px #ff00cc;
+}
+
+/* QR */
+#qr {
+  width: 320px;
+  margin-top: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff00cc, 0 0 40px #ff00cc;
+}
+
+/* nombre */
+#nombre {
+  margin-top: 25px;
+  font-family: 'Pacifico', cursive;
+  font-size: 40px;
+  color: #ff66ff;
+  text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff00cc;
+}
+
+/* panel control (solo para ti) */
+.control {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.7);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+input {
+  display: block;
+  margin: 5px 0;
+  padding: 5px;
+  width: 200px;
+}
+
+button {
+  padding: 5px 10px;
+  background: #ff00cc;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>DESCARGA TU VIDEO</h1>
+  <img id="qr">
+  <div id="nombre"></div>
+</div>
+
+<!-- PANEL SOLO PARA TI -->
+<div class="control">
+  <input id="inputNombre" placeholder="Nombre cliente">
+  <input id="inputLink" placeholder="Link Google Drive">
+  <button onclick="generarQR()">Generar QR</button>
+</div>
+
+<script>
+function generarQR() {
+  let nombre = document.getElementById("inputNombre").value;
+  let link = document.getElementById("inputLink").value;
+
+  if (!link.startsWith("http")) return;
+
+  let qr = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" + encodeURIComponent(link);
+
+  document.getElementById("qr").src = qr;
+  document.getElementById("nombre").innerText = nombre;
+}
+</script>
+
+</body>
+</html>
